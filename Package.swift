@@ -26,7 +26,7 @@ let package = Package(
             name: "SwiftSignInWithApple",
             dependencies: [.product(name: "SwiftJWT", package: "Swift-JWT")]),
         .testTarget(
-            name: "SwiftSignInWithApple Tests",
+            name: "SwiftSignInWithApple_Tests",
             dependencies: ["SwiftSignInWithApple"]),
     ]
 )

@@ -98,9 +98,10 @@ public class Validator {
         request.addValue(UserAgent, forHTTPHeaderField: "user-agent")
         request.httpBody = data.map { "\($0)=\($1)" }.joined(separator: "&").data(using: .utf8)
 
-        if let d = request.httpBody, let bodyString = String(data: d, encoding: .utf8) {
-            print(bodyString)
-        }
+// prints requests for debugging
+//        if let d = request.httpBody, let bodyString = String(data: d, encoding: .utf8) {
+//            print(bodyString)
+//        }
         
         let (data, resp) = try await self.session.data(for: request)
         
@@ -111,12 +112,12 @@ public class Validator {
         guard (resp as? HTTPURLResponse)!.statusCode != 200 else {
             throw NSError(domain: "doRequest", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP error"])
         }
-        
-        let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-            let jsonString = try JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted])
-            if let prettyPrintedString = String(data: jsonString, encoding: .utf8) {
-                print(prettyPrintedString)
-            }
+// prints response for debugging
+//        let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+//            let jsonString = try JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted])
+//            if let prettyPrintedString = String(data: jsonString, encoding: .utf8) {
+//                print(prettyPrintedString)
+//            }
         
         result = try JSONDecoder().decode(T.self, from: data)
     }

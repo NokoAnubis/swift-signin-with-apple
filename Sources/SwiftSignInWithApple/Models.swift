@@ -102,26 +102,26 @@ public struct RevokeRefreshTokenRequest {
  */
 public struct ValidationResponse: Codable {
     // (Reserved for future use) A token used to access allowed data. Currently, no data set has been defined for access.
-    let accessToken: String?
+    public let accessToken: String?
 
     // The type of access token. It will always be "bearer".
-    let tokenType: String?
+    public let tokenType: String?
 
     // The amount of time, in seconds, before the access token expires. You can revalidate with the "RefreshToken"
-    let expiresIn: Int?
+    public let expiresIn: Int?
 
     // The refresh token used to regenerate new access tokens. Store this token securely on your server.
     // The refresh token isn’t returned when validating an existing refresh token. Please refer to RefreshReponse below
-    let refreshToken: String?
+    public let refreshToken: String?
 
     // A JSON Web Token that contains the user’s identity information.
-    let idToken: String?
+    public let idToken: String?
 
     // Used to capture any error returned by the endpoint. Do not trust the response if this error is not nil
-    let error: String?
+    public let error: String?
 
     // A more detailed precision about the current error.
-    let errorDescription: String?
+    public let errorDescription: String?
     
     public init() {
         self.accessToken = ""

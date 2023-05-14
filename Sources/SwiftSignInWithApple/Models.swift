@@ -185,62 +185,62 @@ public struct AppleClaims: JWTPayload {
     /**
      The issuer registered claim identifies the principal that issues the identity token. Because Apple generates the token, the value is https://appleid.apple.com.
      */
-    let iss: String
+    public let iss: String
     
     /**
      The subject registered claim identifies the principal that’s the subject of the identity token. Because this token is for your app, the value is the unique identifier for the user.
      */
-    let sub: String
+    public let sub: String
     
     /**
      The audience registered claim identifies the recipient of the identity token. Because the token is for your app, the value is the client_id from your developer account.
      */
-    let aud: String
+    public let aud: String
     
     /**
      The issued at registered claim indicates the time that Apple issues the identity token, in the number of seconds since the Unix epoch in UTC.
      */
-    let iat: Date
+    public let iat: Date
     
     /**
      The expiration time registered claim identifies the time that the identity token expires, in the number of seconds since the Unix epoch in UTC. The value must be greater than the current date and time when verifying the token.
      */
-    let exp: Date
+    public let exp: Date
     
     /**
      A string for associating a client session with the identity token. This value mitigates replay attacks and is present only if you pass it in the authorization request.
      */
-    let nonce: String?
+    public let nonce: String?
     
     /**
      A Boolean value that indicates whether the transaction is on a nonce-supported platform. If you send a nonce in the authorization request, but don’t see the nonce claim in the identity token, check this claim to determine how to proceed. If this claim returns true, treat nonce as mandatory and fail the transaction; otherwise, you can proceed treating the nonce as optional.
      */
-    let nonceSupported: Bool?
+    public let nonceSupported: Bool?
     
     /**
      A string value that represents the user’s email address. The email address is either the user’s real email address or the proxy address, depending on their private email relay service. This value may be empty for Sign in with Apple at Work & School users. For example, younger students may not have an email address.
      */
-    let email: String?
+    public let email: String?
     
     /**
      A string or Boolean value that indicates whether the service verifies the email. The value can either be a string ("true" or "false") or a Boolean (true or false). The system may not verify email addresses for Sign in with Apple at Work & School users, and this claim is "false" or false for those users.
      */
-    let emailVerified: String?
+    public let emailVerified: String?
     
     /**
      A string or Boolean value that indicates whether the email that the user shares is the proxy address. The value can either be a string ("true" or "false") or a Boolean (true or false).
      */
-    let isPrivateEmail: String?
+    public let isPrivateEmail: String?
     
     /**
      An Integer value that indicates whether the user appears to be a real person. Use the value of this claim to mitigate fraud. The possible values are: 0 (or Unsupported), 1 (or Unknown), 2 (or LikelyReal). For more information, see ASUserDetectionStatus. This claim is present only in iOS 14 and later, macOS 11 and later, watchOS 7 and later, tvOS 14 and later. The claim isn’t present or supported for web-based apps.
      */
-    let realUserStatus: Int?
+    public let realUserStatus: Int?
     
     /**
      A string value that represents the transfer identifier for migrating users to your team. This claim is present only during the 60-day transfer period after you transfer an app.
      */
-    let transferSub: String?
+    public let transferSub: String?
     
     public init(
             iss: String,

@@ -4,9 +4,9 @@ import XCTest
 final class SwiftSignInWithApple_Tests: XCTestCase {
     func testAppTokenVerfication() async throws {
         let validator = Validator()
-        let teamId: String = "5A6H49Q85D"
-        let clientId: String = "com.coronislabs.Olympsis"
-        let keyId: String = "S3HDPU4ZC5"
+        let teamId: String = "xxxxxx"
+        let clientId: String = "com.example.company"
+        let keyId: String = "xxxxxx"
         let token = """
             -----BEGIN PRIVATE KEY-----
             xxxxxxxxxxxxxxxxxxxxxxxxxxx

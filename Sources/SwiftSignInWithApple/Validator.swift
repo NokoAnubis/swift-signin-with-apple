@@ -103,21 +103,14 @@ public class Validator {
 //            print(bodyString)
 //        }
         
-        let (data, resp) = try await self.session.data(for: request)
+        let (data, _) = try await self.session.data(for: request)
         
-        guard let httpResponse = resp as? HTTPURLResponse else {
-            throw NSError(domain: "doRequest", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
-        }
-        
-        guard (resp as? HTTPURLResponse)!.statusCode != 200 else {
-            throw NSError(domain: "doRequest", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "HTTP error"])
-        }
 // prints response for debugging
-//        let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-//            let jsonString = try JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted])
-//            if let prettyPrintedString = String(data: jsonString, encoding: .utf8) {
-//                print(prettyPrintedString)
-//            }
+        let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+            let jsonString = try JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted])
+            if let prettyPrintedString = String(data: jsonString, encoding: .utf8) {
+                print(prettyPrintedString)
+            }
         
         result = try JSONDecoder().decode(T.self, from: data)
     }

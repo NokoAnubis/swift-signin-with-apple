@@ -5,7 +5,7 @@
 //  Created by Joel Joseph on 5/7/23.
 //
 
-import SwiftJWT
+import JWTKit
 import CryptoKit
 import Foundation
 
@@ -20,22 +20,23 @@ import Foundation
  keyID - Find the 10-char Key ID value from the portal
  */
 public func GenerateClientSecret(signingKey: String, teamID: String, clientID: String, keyID: String) throws -> String {
-    
-    guard let privateKeyData = signingKey.data(using: .utf8) else {
-        throw NSError(domain: "com.example", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid signing key"])
-    }
-//    let privateKey = try P256.Signing.PrivateKey(pemRepresentation: privateKeyData.base64EncodedString())
-    
     let now = Date()
-    let expirationDate = now.addingTimeInterval(60 * 60 * 24 * 180) // 180 days
-    let claims = JWTClaims(iss: teamID, sub: clientID, exp: expirationDate, aud: "https://appleid.apple.com", iat: now)
-    var headers = Header()
-    headers.kid = keyID
-    
-    var jwt = JWT(header: headers, claims: claims)
-    
-    let jwtSigner = JWTSigner.es256(privateKey: privateKeyData)
-    let signedJWT = try jwt.sign(using: jwtSigner)
-    
-    return signedJWT
+    let exp = now.addingTimeInterval(60 * 60 * 24 * 180) // 180 days
+    let key = try ECDSAKey.private(pem: signingKey)
+    let signers = JWTSigner.es256(key: key)
+    let claims = AppleClaims(iss: teamID, sub: clientID, aud: "https://appleid.apple.com", iat: now, exp: exp)
+    let jwt = try signers.sign(claims, kid: JWKIdentifier(string: keyID))
+    return jwt
+}
+
+/**
+We verify apple jwt token against the apple server to make sure it is correct
+ */
+public func VerifyAppleJWTToken(tk: String) throws -> AppleClaims {
+    let jwksData = try Data(contentsOf: URL(string: "https://appleid.apple.com/auth/keys")!)
+    let jwks = try JSONDecoder().decode(JWKS.self, from: jwksData)
+    let signers = JWTSigners()
+    try signers.use(jwks: jwks)
+    let payload = try signers.verify(tk, as: AppleClaims.self)
+    return payload
 }

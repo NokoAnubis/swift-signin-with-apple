@@ -21,4 +21,8 @@ final class SwiftSignInWithApple_Tests: XCTestCase {
     func testAppleJWTTokenDecoder() async throws {
         let payload = try VerifyAppleJWTToken(tk: "xxxxxxxxxxxxxxxx")
     }
+    
+    func testRevokeAccessToken() async throws {
+        
+    }
 }

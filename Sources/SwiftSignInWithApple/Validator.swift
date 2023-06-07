@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 public class Validator {
     
     // Static values for requests
